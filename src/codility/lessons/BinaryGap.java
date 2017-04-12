@@ -10,10 +10,11 @@ public class BinaryGap {
         int n = reader.nextInt();
 
 
-        binaryGapSolution(n);
+        System.out.println("Max binary gap equals: " + binaryGapSolution(n));
     }
 
-    public static void binaryGapSolution(int n) {
+    public static int binaryGapSolution(int n) {
+        if(n == 0) return 0;
         String numberString = Integer.toBinaryString(n);
         System.out.println(numberString);
         System.out.println(numberString.length());
@@ -27,19 +28,28 @@ public class BinaryGap {
             System.out.println("Binary Array index [" + i + "] : " + binaryArray[i]);
         }
 
-//
-//        //int binaryGapSolutionValue = 0;
-//
-//
-//
-//
-//        String binaryArrayString = new String();
-//
-//        for(int j = 0; j < binaryArray.length; j++){
-//            binaryArrayString += String.valueOf(binaryArray[j]);
-//        }
-//
-//
-//        // System.out.println(binaryArrayString);
+        int[] oneBitIndexArray = new int[Integer.bitCount(n)];
+        int j = 0;
+
+        for(int i = 0; i < binaryArray.length; i++){
+            if(binaryArray[i] == 1){
+                oneBitIndexArray[j] = i;
+                j++;
+            }
+        }
+        System.out.println("---------");
+        for(int i = 0; i < oneBitIndexArray.length; i++){
+            System.out.println("One bit index array ["+i+"] : "+oneBitIndexArray[i]);
+        }
+
+        int maxBinaryGap = 0;
+        int currentGap;
+
+        for(int i = oneBitIndexArray.length-1; i > 0; i--){
+            currentGap = oneBitIndexArray[i] - oneBitIndexArray[i-1];
+            if(currentGap > maxBinaryGap) maxBinaryGap = currentGap;
+        }
+
+        return maxBinaryGap-1;
     }
 }
